@@ -1,11 +1,14 @@
 <template>
   <el-table :data="tableData">
-    <el-table-column prop="date" label="日期" width="140">
+    <el-table-column prop="id" label="ID" width="120">
     </el-table-column>
-    <el-table-column prop="name" label="姓名" width="120">
+    <el-table-column prop="username" label="用户名" width="120">
     </el-table-column>
-    <el-table-column prop="address" label="地址">
+    <el-table-column prop="email" label="邮箱" width="120">
     </el-table-column>
+    <el-table-column prop="phone" label="电话">
+    </el-table-column>
+
   </el-table>
 </template>
 
@@ -15,30 +18,29 @@ export default {
   components: {
   },
   data() {
-    const item = {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄'
-    };
+
     return {
-      tableData: Array(10).fill(item)
+      tableData: []
     }
   },
   methods:{
     loadGet(){
       this.$axios.get('http://www.xiaolin.fun:8080/user/all').then(res=>res.data).then(res=>{
-        console.log(res)
+        console.log(res.data)
+        this.tableData=res.data
       })
     },
     loadPost(){
-      this.$axios.get('http://www.xiaolin.fun:8080/user').then(res=>res.data).then(res=>{
+      this.$axios.post('http://www.xiaolin.fun:8080/user/all').then(res=>res.data).then(res=>{
         console.log(res)
+        //this.tableData=res
       })
     }
   },
 
   beforeMount() {
     this.loadGet()
+    //this.loadPost()
   }
 }
 </script>
